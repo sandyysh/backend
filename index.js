@@ -16,7 +16,9 @@ const twilioClient = require('twilio')(accountSid, authToken);
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.get('/', (req, res) => {
     res.send('Hello, World!');
@@ -58,5 +60,11 @@ app.post('/', (req, res) => {
 
 
 app.use('/auth', authRoutes);
+app.use(express.static(path.join(__dirname, "./client/build")))
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname,"./client/build/index.html"))
+});
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
