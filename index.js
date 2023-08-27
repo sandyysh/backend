@@ -1,6 +1,7 @@
-
 const express = require('express');
-const cors = require('cors');
+const cors = require('cors')
+const path = require('path'); // Add this line to import the path module
+
 
 const authRoutes = require("./routes/auth.js");
 
@@ -60,7 +61,7 @@ app.post('/', (req, res) => {
 
 
 app.use('/auth', authRoutes);
-app.use(express.static(path.join(__dirname, "./client/build")))
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname,"./client/build/index.html"))
