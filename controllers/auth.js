@@ -12,6 +12,16 @@ const app_id = process.env.STREAM_APP_ID;
 const signup = async (req, res) => {
     try {
         const { fullName, username, password, phoneNumber } = req.body;
+        
+        if (password.length < 8){
+            res.status(403).json({ message: "Password must be at least 8 characters" });
+        }
+        
+       const phoneNumberRegex = /^\d+$/; // This regex matches only numeric digits.
+
+        if (!phoneNumber.match(phoneNumberRegex) || phoneNumber.length < 8) {
+            res.status(403).json({ message: "Phone number must contain at least 8 numeric digits" });
+        }
 
         const userId = crypto.randomBytes(16).toString('hex');
 
